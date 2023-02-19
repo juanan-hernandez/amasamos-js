@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+
+<head>
+    <link rel="stylesheet" type="text/css" href="css/style.css" />
+</head>
+
+<body>
+
+    <h1>AMASAMOS</h1>
+
+    <% if (typeof dough[Object.keys(dough)[0]] === 'object') { %>
+
+    
+        <select name="dough" id="dough" onchange="businessLogic(this)">
+            <% for (let i=0; i < Object.keys(dough).length; i++) { %>
+                <option value="<%=Object.keys(dough)[i]%>" selected>
+                    <%= Object.keys(dough)[i]%>
+                </option>
+            <%}%>
+        </select>
+    </br>
+
+        <% for (let i=0; i < Object.keys(dough).length; i++) { %>
+            <% doughKey = Object.keys(dough)[i] %>
+            <div id="<%=doughKey%>" style="display: none">
+            <% doughSubKeys = Object.keys(dough[doughKey]) %>
+            <% for (let j=0; j < doughSubKeys.length; j++) { %>
+                <label>
+                    <%= doughSubKeys[j] %>
+                </label>
+                <input id="<%=doughKey%>-<%=doughSubKeys[j]%>" type="number"  onchange="updateValues(this)"/>
+            </br>
+            <%}%>
+            </br>
+            </br>
+        </div>
+        <%}%>
+        
+    
+    <% } else { %>
+
+        <p>sin dropdown</p>    
+    <% } %>
+
+    <script>
+        businessLogic(document.getElementById('dough'))
+        function businessLogic(item) {
+            const doughDict = JSON.parse('<%- JSON.stringify(dough) %>')
+            Object.keys(doughDict).forEach(element => {
+                console.log(item.value)
+                if (element === item.value) {
+                    document.getElementById(item.value).style.display = "block"
+                } else {
+                    document.getElementById(element).style.display = "none"
+                }
+            });
+        }
+        function updateValues(item) {
+            console.log(item.value)
+            const doughDict = JSON.parse('<%- JSON.stringify(dough) %>')
+            // const itemDict = doughDict[item.value]
+            const { doughSelected, ingredient } = item.value.split('-')
+            console.log(doughDict, ingredient)
+        }
+    </script>
+
+</body>

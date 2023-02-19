@@ -1,0 +1,20 @@
+{
+  "name": "amasamos",
+  "version": "1.0.0",
+  "description": "Amasamos Express App",
+  "main": "index.js",
+  "scripts": {
+    "start": "node app.js",
+    "start-dev": "nodemon app.js"
+  },
+  "author": "juanan-hernandez",
+  "license": "ISC",
+  "dependencies": {
+    "ejs": "^3.1.8",
+    "express": "^4.18.2"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.20",
+    "prettier": "2.8.4"
+  }
+}

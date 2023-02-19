@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+
+<head>
+    <link rel="stylesheet" type="text/css" href="css/style.css" />
+</head>
+
+<body>
+    <h1>AMASAMOS</h1>
+        <% for (let i=0; i < Object.keys(data).length; i++) { %>
+            <button value="<%=Object.keys(data)[i]%>" onclick="location.href='/<%=Object.keys(data)[i]%>'">
+                <%= Object.keys(data)[i]%>
+            </button>
+        <%}%>
+
+</body>
+
+</html>
