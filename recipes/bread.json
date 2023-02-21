@@ -1,23 +1,23 @@
 {
-    "whiteBreadDict": {
-        "white-flour": 0.5006587615,
-        "water": 0.3096179183,
-        "salt": 0.01185770751,
-        "sourdough": 0.1778656126
-    },
-    "wholeWheatBreadDict": {
-        "water": 0.311332503113325,
-        "salt": 0.009962640099626,
-        "whole-wheat-flour": 0.410958904109589,
-        "sourdough": 0.205479452054795,
-        "flax-seeds": 0.024906600249066,
-        "water-for-flax-seeds": 0.037359900373599
-    },
-    "halfWholeWheatBreadDict": {
-        "white-flour": 0.286561265,
-        "water": 0.340909091,
-        "salt": 0.011857708,
-        "whole-wheat-flour": 0.212450593,
-        "sourdough": 0.1482
-    }
+	"white-bread": {
+		"white-flour": 0.5006587615,
+		"water": 0.3096179183,
+		"salt": 0.01185770751,
+		"sourdough": 0.1778656126
+	},
+	"whole-wheat-bread": {
+		"water": 0.311332503113325,
+		"salt": 0.009962640099626,
+		"whole-wheat-flour": 0.410958904109589,
+		"sourdough": 0.205479452054795,
+		"flax-seeds": 0.024906600249066,
+		"water-for-flax-seeds": 0.037359900373599
+	},
+	"half-whole-wheat-bread": {
+		"white-flour": 0.286561265,
+		"water": 0.340909091,
+		"salt": 0.011857708,
+		"whole-wheat-flour": 0.212450593,
+		"sourdough": 0.1482
+	}
 }

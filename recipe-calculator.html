@@ -14,7 +14,7 @@
         <select name="dough" id="dough" onchange="businessLogic(this)">
             <% for (let i=0; i < Object.keys(dough).length; i++) { %>
                 <option value="<%=Object.keys(dough)[i]%>" selected>
-                    <%= Object.keys(dough)[i]%>
+                    <%= translation[Object.keys(dough)[i]]%>
                 </option>
             <%}%>
         </select>
@@ -26,11 +26,15 @@
             <% doughSubKeys = Object.keys(dough[doughKey]) %>
             <% for (let j=0; j < doughSubKeys.length; j++) { %>
                 <label>
-                    <%= doughSubKeys[j] %>
+                    <%= translation[doughSubKeys[j]] %>
                 </label>
-                <input id="<%=doughKey%>-<%=doughSubKeys[j]%>" type="number"  onchange="updateValues(this)"/>
+                <input id="<%=doughKey%>/<%=doughSubKeys[j]%>" type="number" value="0" onkeyup="updateValues(this, true)"/>
             </br>
             <%}%>
+                <label>
+                    <%=translation['weight'] %>
+                </label>
+                <input id="<%=doughKey%>/weight" type="number" value="0"  onkeyup="updateValues(this, true)"/>
             </br>
             </br>
         </div>
@@ -38,16 +42,31 @@
         
     
     <% } else { %>
-
-        <p>sin dropdown</p>    
+        <% for (let i=0; i < Object.keys(dough).length; i++) { %>
+            <label>
+                <%= translation[Object.keys(dough)[i]] %>
+            </label>
+            <input id="<%=Object.keys(dough)[i]%>" type="number" onkeyup="updateValues(this)"/>
+        </br>
+        <%}%>
+            <label>
+                <%=translation['weight'] %>
+            </label>
+            <input id="weight" type="number"  onkeyup="updateValues(this)"/>
+        </br>
     <% } %>
+
+    <button><a href="/" class="button"><%=translation['back'] %></a></button>
+
+
+
 
     <script>
         businessLogic(document.getElementById('dough'))
+
         function businessLogic(item) {
             const doughDict = JSON.parse('<%- JSON.stringify(dough) %>')
             Object.keys(doughDict).forEach(element => {
-                console.log(item.value)
                 if (element === item.value) {
                     document.getElementById(item.value).style.display = "block"
                 } else {
@@ -55,13 +74,38 @@
                 }
             });
         }
-        function updateValues(item) {
-            console.log(item.value)
+
+        function updateValues(item, nestedRecipe) {
             const doughDict = JSON.parse('<%- JSON.stringify(dough) %>')
-            // const itemDict = doughDict[item.value]
-            const { doughSelected, ingredient } = item.value.split('-')
-            console.log(doughDict, ingredient)
+            let ingredient = item.id
+            let doughSelected = ''
+            if (nestedRecipe) {
+                [ doughSelected, ingredient ] = item.id.split('/')
+            }
+            
+            const itemDict = nestedRecipe ? doughDict[doughSelected] : doughDict
+            let doughCalc = calculateFinalDough(itemDict, ingredient, item.value)
+            Object.keys(doughCalc).forEach((key) => {
+                const elementId = nestedRecipe ? `${doughSelected}/${key}` : key
+                if (key !== ingredient) {
+                    document.getElementById(elementId).value = doughCalc[key]
+                }
+            })
         }
+
+        function calculateFinalDough(recipeDict, key, value ) {
+            // Always the starting point is the final dough quantity.
+            const finalDough = (key === 'weight') ? value : value / recipeDict[key];
+
+            const finalDict = { 'weight': Number(finalDough).toFixed(2) };
+
+            Object.keys(recipeDict).forEach(function (key) {
+                finalDict[key] = (finalDough * recipeDict[key]).toFixed(2);
+            });
+
+            return finalDict;
+        }
+
     </script>
 
 </body>
