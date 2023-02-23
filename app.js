@@ -1,6 +1,6 @@
 const express = require("express");
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000;
 var bodyParser = require("body-parser");
 var fs = require("fs");
 
@@ -8,7 +8,8 @@ app.use(express.static("public"));
 app.use("/static", express.static("public"));
 app.engine("html", require("ejs").renderFile);
 app.set("view engine", "html");
-app.set("views", __dirname);
+const viewsFolder = `${__dirname}/html`;
+app.set("views", viewsFolder);
 
 function getFileJson(fileName) {
 	try {
@@ -34,7 +35,7 @@ function listFolderFiles(folder) {
 
 app.get("/", (req, res) => {
 	const data = listFolderFiles("recipes");
-	res.render(__dirname + "/index.html", { data });
+	res.render(viewsFolder + "/index.html", { data });
 });
 
 app.get("/:dough", (req, res) => {
@@ -52,7 +53,7 @@ app.get("/:dough", (req, res) => {
 	);
 
 	if (dough) {
-		res.render(__dirname + "/recipe-calculator.html", {
+		res.render(viewsFolder + "/recipe-calculator.html", {
 			dough,
 			translation: { ...translation, ...translationCommon },
 		});
