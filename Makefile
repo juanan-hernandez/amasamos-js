@@ -9,6 +9,10 @@ run:
 	docker build -t $(SERVICE_NAME) .
 	docker run -p 127.0.0.1:8080:8080 $(SERVICE_NAME)
 
+run-dev:
+	docker build -t $(SERVICE_NAME) .
+	docker run -p 127.0.0.1:3333:8080 $(SERVICE_NAME)
+
 deploy:
 	echo "Create Docker image via 'Cloud Build' ..."
 	gcloud builds submit  \
